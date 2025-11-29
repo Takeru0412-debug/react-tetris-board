@@ -19,8 +19,6 @@ html, body {
   margin: 0 auto;
   padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom);
   box-sizing: border-box;
-  position: relative;
-  z-index: 1;
 }
 
 /* =====================================================
@@ -41,7 +39,7 @@ html, body {
   justify-content: space-between;
   padding: 8px 12px;
   border-radius: 10px;
-  background: rgba(30, 41, 59, 0.55);
+  background: rgba(30,41,59,0.55);
   border: 1px solid rgba(255,255,255,0.1);
   margin-bottom: 8px;
 }
@@ -58,7 +56,7 @@ html, body {
 }
 
 /* =====================================================
-   MAIN (PC)
+   MAIN LAYOUT (PC)
 ===================================================== */
 .middle-panel {
   display: flex;
@@ -66,33 +64,24 @@ html, body {
   gap: 28px;
 }
 
-/* =====================================================
-   BOARD
-===================================================== */
 .board {
   width: 360px;
   height: 720px;
   background: #020617;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: 1fr;
   gap: 2px;
   padding: 6px;
   border-radius: 14px;
   border: 2px solid rgba(255,255,255,0.1);
-  position: relative;
-  z-index: 1; /* ← 重要：ボタンより下 */
-  pointer-events: auto;
 }
 
 .cell {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
 }
 
-/* =====================================================
-   SIDE (PC)
-===================================================== */
 .side-stack {
   width: 240px;
   display: flex;
@@ -113,25 +102,11 @@ html, body {
   margin-bottom: 8px;
 }
 
-.hold-grid,
-.next-mini {
-  width: 100px;
-  height: 100px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
-}
-
-/* =====================================================
-   PC BOTTOM BUTTONS
-===================================================== */
 .bottom-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 14px;
-  position: relative;
-  z-index: 5;
 }
 
 .bottom-buttons button {
@@ -150,15 +125,12 @@ html, body {
   background: linear-gradient(90deg, #f97316, #ef4444);
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
 .mobile-controls {
   display: none;
 }
 
 /* =====================================================
-   📱 MOBILE — 100% 押せる完全版
+   📱 MOBILE MODE（比率固定）
 ===================================================== */
 @media (max-width: 430px) {
 
@@ -173,27 +145,21 @@ html, body {
 
   .top-status {
     padding: 6px 10px;
-    margin-bottom: 6px;
-  }
-
-  .stat-item {
-    font-size: 11px;
   }
 
   .middle-panel {
     flex-direction: column;
-    gap: 6px;
     align-items: center;
+    gap: 6px;
   }
 
-  /* 🔥 board height を 36vh に下げる（重要） */
+  /* 🔥 board の正方形比率を維持する */
   .board {
     width: 92vw;
-    height: 36vh; /* ← これで Start が被らない */
-    max-height: 340px;
+    height: calc(92vw * 2); /* ← 必ず縦2倍 */
+    max-height: 80vh;       /* ← 画面に収まる安全値 */
     padding: 4px;
     gap: 2px;
-    z-index: 1; /* ← ボタンより後ろ */
   }
 
   /* HOLD / NEXT */
@@ -210,22 +176,16 @@ html, body {
     padding: 10px;
   }
 
-  .hold-grid,
-  .next-mini {
-    width: 70px;
-    height: 70px;
-  }
-
-  /* 🔥 Start/Resume を完全に押せる位置へ移動 */
+  /* 🔥 Start/Resume を HOLD/NEXT の直下へ */
   .bottom-buttons {
     order: 2;
     width: 100%;
     display: flex !important;
     justify-content: center;
     gap: 10px;
-    margin: 4px 0 4px;
-    position: relative;
-    z-index: 50; /* ← board より上 */
+    margin-top: 4px;
+    margin-bottom: 4px;
+    z-index: 50;
   }
 
   .bottom-buttons button {
@@ -234,19 +194,19 @@ html, body {
     flex: 1;
   }
 
-  /* 操作ボタン（← → ↻ ↓ ⬇） */
+  /* 🔥 操作ボタン（ ← → ↻ ↓ ⬇ ）最上層 */
   .mobile-controls {
     display: flex;
     justify-content: center;
     gap: 10px;
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 8px);
+    bottom: calc(env(safe-area-inset-bottom) + 10px);
     left: 50%;
     transform: translateX(-50%);
     background: rgba(30,41,59,0.75);
     padding: 10px 14px;
     border-radius: 16px;
-    z-index: 1000; /* ← 一番上 */
+    z-index: 1000;
   }
 
   .mobile-controls button {
@@ -260,14 +220,9 @@ html, body {
 }
 
 /* =====================================================
-   横向き（PC UI）
+   横向きは PC UI へ
 ===================================================== */
 @media (max-height: 500px) and (orientation: landscape) {
-
-  body {
-    overflow: hidden;
-  }
-
   .middle-panel {
     flex-direction: row;
     gap: 20px;
@@ -276,11 +231,6 @@ html, body {
   .board {
     height: 90vh;
     width: calc(90vh * 0.5);
-  }
-
-  .side-stack {
-    flex-direction: column;
-    width: auto;
   }
 
   .mobile-controls {
