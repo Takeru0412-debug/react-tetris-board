@@ -77,11 +77,9 @@ html, body {
   border: 2px solid rgba(255,255,255,0.1);
 }
 
-.cell {
-  width: 100%;
-  height: 100%;
-}
-
+/* =====================================================
+   SIDE PANEL
+===================================================== */
 .side-stack {
   width: 240px;
   display: flex;
@@ -112,10 +110,10 @@ html, body {
 .bottom-buttons button {
   padding: 12px 24px;
   font-size: 16px;
-  color: #fff;
-  border: none;
+  color: white;
+  font-weight: bold;
   border-radius: 10px;
-  font-weight: 600;
+  border: none;
 }
 
 .bottom-buttons button:first-child {
@@ -130,7 +128,7 @@ html, body {
 }
 
 /* =====================================================
-   📱 MOBILE MODE（比率固定）
+   📱 MOBILE MODE（board 少し小さめ + 完全見えるUI）
 ===================================================== */
 @media (max-width: 430px) {
 
@@ -140,7 +138,7 @@ html, body {
 
   .title {
     font-size: 22px;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 
   .top-status {
@@ -150,15 +148,15 @@ html, body {
   .middle-panel {
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
   }
 
-  /* 🔥 board の正方形比率を維持する */
+  /* 🟦 board を少し小さめに（比率維持） */
   .board {
-    width: 92vw;
-    height: calc(92vw * 2); /* ← 必ず縦2倍 */
-    max-height: 80vh;       /* ← 画面に収まる安全値 */
-    padding: 4px;
+    width: 90vw;
+    height: calc(90vw * 1.65);  /* ← ここが神調整ポイント：比率維持しつつ短く */
+    max-height: 60vh;          /* ← 画面に収める */
+    padding: 3px;
     gap: 2px;
   }
 
@@ -167,7 +165,7 @@ html, body {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    gap: 6px;
+    gap: 8px;
   }
 
   .hold-card,
@@ -176,31 +174,29 @@ html, body {
     padding: 10px;
   }
 
-  /* 🔥 Start/Resume を HOLD/NEXT の直下へ */
+  /* 🟩 Start / Pause ボタンは中央に完全表示 */
   .bottom-buttons {
-    order: 2;
     width: 100%;
+    margin: 6px 0;
     display: flex !important;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    z-index: 50;
+    gap: 12px;
+    z-index: 20;
   }
 
   .bottom-buttons button {
+    flex: 1;
     padding: 10px 12px;
     font-size: 15px;
-    flex: 1;
+    border-radius: 8px;
   }
 
-  /* 🔥 操作ボタン（ ← → ↻ ↓ ⬇ ）最上層 */
+  /* 🟥 操作ボタン（常に最上位） */
   .mobile-controls {
     display: flex;
     justify-content: center;
     gap: 10px;
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 10px);
+    bottom: calc(env(safe-area-inset-bottom) + 8px);
     left: 50%;
     transform: translateX(-50%);
     background: rgba(30,41,59,0.75);
@@ -215,14 +211,15 @@ html, body {
     background: #1e293b;
     border: 1px solid #334155;
     border-radius: 12px;
-    color: #f8fafc;
+    color: #fff;
   }
 }
 
 /* =====================================================
-   横向きは PC UI へ
+   横画面は PC に戻す
 ===================================================== */
 @media (max-height: 500px) and (orientation: landscape) {
+
   .middle-panel {
     flex-direction: row;
     gap: 20px;
