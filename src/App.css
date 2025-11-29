@@ -10,6 +10,7 @@ html, body {
   user-select: none;
   overscroll-behavior: none;
   height: 100%;
+  overflow-x: hidden;
 }
 
 .tetris-root {
@@ -18,6 +19,8 @@ html, body {
   margin: 0 auto;
   padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom);
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 /* =====================================================
@@ -55,7 +58,7 @@ html, body {
 }
 
 /* =====================================================
-   MAIN LAYOUT (PC)
+   MAIN (PC)
 ===================================================== */
 .middle-panel {
   display: flex;
@@ -76,6 +79,9 @@ html, body {
   padding: 6px;
   border-radius: 14px;
   border: 2px solid rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 1; /* ← 重要：ボタンより下 */
+  pointer-events: auto;
 }
 
 .cell {
@@ -85,7 +91,7 @@ html, body {
 }
 
 /* =====================================================
-   SIDE PANEL (PC)
+   SIDE (PC)
 ===================================================== */
 .side-stack {
   width: 240px;
@@ -117,13 +123,15 @@ html, body {
 }
 
 /* =====================================================
-   BOTTOM BUTTONS (PC)
+   PC BOTTOM BUTTONS
 ===================================================== */
 .bottom-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 14px;
+  position: relative;
+  z-index: 5;
 }
 
 .bottom-buttons button {
@@ -143,25 +151,24 @@ html, body {
 }
 
 /* =====================================================
-   MOBILE CONTROLS
+   MOBILE
 ===================================================== */
 .mobile-controls {
   display: none;
 }
 
 /* =====================================================
-   📱 MOBILE MODE（iPhone 〜 Android）最適化
+   📱 MOBILE — 100% 押せる完全版
 ===================================================== */
 @media (max-width: 430px) {
 
   html, body {
-    height: 100%;
-    overflow: hidden; /* スクロール禁止 */
+    overflow: hidden;
   }
 
   .title {
     font-size: 22px;
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   .top-status {
@@ -175,20 +182,21 @@ html, body {
 
   .middle-panel {
     flex-direction: column;
+    gap: 6px;
     align-items: center;
-    gap: 4px;
   }
 
-  /* BOARD 高さ調整：40vhで固定 */
+  /* 🔥 board height を 36vh に下げる（重要） */
   .board {
     width: 92vw;
-    height: 40vh;
-    max-height: 380px;
+    height: 36vh; /* ← これで Start が被らない */
+    max-height: 340px;
     padding: 4px;
     gap: 2px;
+    z-index: 1; /* ← ボタンより後ろ */
   }
 
-  /* HOLD / NEXT 並列 */
+  /* HOLD / NEXT */
   .side-stack {
     width: 100%;
     flex-direction: row;
@@ -206,29 +214,27 @@ html, body {
   .next-mini {
     width: 70px;
     height: 70px;
-    gap: 2px;
   }
 
-  /* ★ Start / Resume ボタンを HOLD/NEXT の直下へ */
+  /* 🔥 Start/Resume を完全に押せる位置へ移動 */
   .bottom-buttons {
     order: 2;
     width: 100%;
     display: flex !important;
     justify-content: center;
     gap: 10px;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    position: static;  /* ← Safariの下固定をやめる */
+    margin: 4px 0 4px;
+    position: relative;
+    z-index: 50; /* ← board より上 */
   }
 
   .bottom-buttons button {
     padding: 10px 12px;
-    font-size: 14px;
-    border-radius: 8px;
+    font-size: 15px;
     flex: 1;
   }
 
-  /* 最下部の操作ボタン（Safariホームバーより上） */
+  /* 操作ボタン（← → ↻ ↓ ⬇） */
   .mobile-controls {
     display: flex;
     justify-content: center;
@@ -240,7 +246,7 @@ html, body {
     background: rgba(30,41,59,0.75);
     padding: 10px 14px;
     border-radius: 16px;
-    z-index: 999;
+    z-index: 1000; /* ← 一番上 */
   }
 
   .mobile-controls button {
@@ -254,9 +260,10 @@ html, body {
 }
 
 /* =====================================================
-   📺 LANDSCAPE (横向きで PC レイアウト化)
+   横向き（PC UI）
 ===================================================== */
 @media (max-height: 500px) and (orientation: landscape) {
+
   body {
     overflow: hidden;
   }
