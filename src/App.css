@@ -33,7 +33,7 @@ html, body {
 }
 
 /* =====================================================
-   TOP STATUS BAR
+   STATUS BAR
 ===================================================== */
 .top-status {
   display: flex;
@@ -58,7 +58,7 @@ html, body {
 }
 
 /* =====================================================
-   MAIN LAYOUT (PC DEFAULT)
+   MAIN LAYOUT (PC)
 ===================================================== */
 .middle-panel {
   display: flex;
@@ -68,7 +68,7 @@ html, body {
 }
 
 /* =====================================================
-   BOARD — PC DEFAULT
+   BOARD (PC)
 ===================================================== */
 .board {
   width: 360px;
@@ -127,7 +127,7 @@ html, body {
 }
 
 /* =====================================================
-   BOTTOM BUTTONS (PC)
+   PC Bottom Buttons
 ===================================================== */
 .bottom-buttons {
   margin-top: 20px;
@@ -154,14 +154,14 @@ html, body {
 }
 
 /* =====================================================
-   MOBILE BUTTONS (HIDDEN ON PC)
+   MOBILE BUTTONS
 ===================================================== */
 .mobile-controls {
   display: none;
 }
 
 /* =====================================================
-   ⚡️ MOBILE MODE (スマホUI：1画面に収める)
+   📱 MOBILE MODE — 全UIを1画面に収める
 ===================================================== */
 @media (max-width: 430px) {
 
@@ -192,24 +192,24 @@ html, body {
     font-size: 9px;
   }
 
-  /* ---------- MAIN PANEL (縦→圧縮) ---------- */
+  /* ---------- MAIN PANEL ---------- */
   .middle-panel {
     flex-direction: column;
     align-items: center;
     gap: 4px;
   }
 
-  /* ---------- BOARD（高さ調整） ---------- */
+  /* ---------- BOARD（高さ調整：約40vh） ---------- */
   .board {
     width: 92vw;
-    height: 44vh;  /* ← これで1画面収まる */
-    max-height: 420px;
+    height: 40vh;  /* ← ボードが最適に収まる高さ */
+    max-height: 380px;
     padding: 4px;
     gap: 2px;
     border-width: 1px;
   }
 
-  /* ---------- HOLD / NEXT を横並び ---------- */
+  /* ---------- HOLD / NEXT ---------- */
   .side-stack {
     flex-direction: row;
     width: 100%;
@@ -230,7 +230,28 @@ html, body {
     gap: 2px;
   }
 
-  /* ---------- 操作ボタン（1行でコンパクト） ---------- */
+  /* =====================================================
+       ★ Start / Pause ボタン復活 & モバイル配置
+  ====================================================== */
+  .bottom-buttons {
+    order: 3;
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .bottom-buttons button {
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    flex: 1;
+  }
+
+  /* =====================================================
+       操作ボタン（画面下。Startボタンの下に表示）
+  ====================================================== */
   .mobile-controls {
     display: flex;
     justify-content: center;
@@ -239,7 +260,7 @@ html, body {
     bottom: calc(env(safe-area-inset-bottom) + 6px);
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(30,41,59,0.7);
+    background: rgba(30,41,59,0.75);
     padding: 10px 14px;
     border-radius: 16px;
     z-index: 999;
@@ -254,22 +275,16 @@ html, body {
     color: #f8fafc;
   }
 
-  /* ---------- PCボタン非表示 ---------- */
-  .bottom-buttons {
-    display: none;
-  }
-
-  /* ---------- Controls（スマホで隠す） ---------- */
+  /* ---------- PC-only controls hidden ---------- */
   .controls-card {
     display: none;
   }
 }
 
 /* =====================================================
-   📺 LANDSCAPE (スマホ横向き → PCレイアウト)
+   📺 LANDSCAPE (スマホ横向き → PC UI)
 ===================================================== */
 @media (max-height: 500px) and (orientation: landscape) {
-
   body {
     overflow: hidden;
   }
