@@ -1,0 +1,230 @@
+/* GLOBAL */
+body {
+  margin: 0;
+  padding: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.tetris-root {
+  width: 100%;
+  max-width: 1100px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  font-size: 28px;
+  color: #f8fafc;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+}
+
+/* ① 上部ステータスバー（横長） */
+.top-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(30,41,59,0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  text-align: center;
+}
+
+.stat-item span {
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+/* ② Middle Panel (2 columns) */
+.middle-panel {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+/* Board */
+.board {
+  width: 360px;
+  height: 720px;
+  background: #020617;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 2px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+
+/* Cells */
+.cell {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Side stack */
+.side-stack {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Panel cards */
+.hold-card,
+.next3-card,
+.controls-card {
+  background: rgba(30,41,59,0.55);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.panel-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+/* HOLD grid */
+.hold-grid {
+  width: 110px;
+  height: 110px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+
+/* NEXT × 3 */
+.next3-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.next-mini {
+  width: 110px;
+  height: 110px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+
+.next-cell {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Buttons */
+.bottom-buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.bottom-buttons button {
+  flex: 1;
+  max-width: 160px;
+  padding: 12px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+}
+
+.bottom-buttons button:first-child {
+  background: linear-gradient(90deg, #22c55e, #3b82f6);
+}
+
+.bottom-buttons button:nth-child(2) {
+  background: linear-gradient(90deg, #f97316, #ef4444);
+}
+
+/* Controls */
+.controls-card ul {
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+/* MOBILE CONTROLS (PCでは非表示) */
+.mobile-controls {
+  display: none;
+}
+
+/* ======================================================
+   📱 SMARTPHONE LAYOUT
+====================================================== */
+@media (max-width: 850px) {
+
+  .top-status {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .middle-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Board becomes 90vw */
+  .board {
+    width: 90vw;
+    height: calc(90vw * 2);
+  }
+
+  .side-stack {
+    width: 100%;
+    align-items: center;
+  }
+
+  .hold-grid, .next-mini {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Mobile controls */
+  .mobile-controls {
+    display: flex;
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 8px;
+    background: rgba(30,41,59,0.7);
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 900;
+  }
+
+  .mobile-controls button {
+    padding: 12px 16px;
+    font-size: 20px;
+    border-radius: 10px;
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+  }
+}
