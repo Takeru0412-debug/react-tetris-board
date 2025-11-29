@@ -1,5 +1,5 @@
 /* =====================================================
-   GLOBAL
+   GLOBAL SETTINGS
 ===================================================== */
 html, body {
   margin: 0;
@@ -9,15 +9,16 @@ html, body {
   font-family: "Segoe UI", sans-serif;
   -webkit-user-select: none;
   user-select: none;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  height: 100%;
 }
 
 .tetris-root {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
   box-sizing: border-box;
+  padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom);
 }
 
 /* =====================================================
@@ -25,11 +26,10 @@ html, body {
 ===================================================== */
 .title {
   text-align: center;
-  font-size: 32px;
-  margin-top: 10px;
-  margin-bottom: 18px;
-  letter-spacing: 3px;
+  font-size: 26px;
   font-weight: 600;
+  margin: 6px 0 10px;
+  letter-spacing: 1px;
 }
 
 /* =====================================================
@@ -38,37 +38,37 @@ html, body {
 .top-status {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 20px;
-  background: rgba(30,41,59,0.6);
-  border-radius: 14px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.55);
   border: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .stat-item {
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
 }
 .stat-item span {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 11px;
+  opacity: 0.6;
 }
 
 /* =====================================================
-   MAIN LAYOUT (PC default)
+   MAIN LAYOUT (PC DEFAULT)
 ===================================================== */
 .middle-panel {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 32px;
+  gap: 28px;
 }
 
 /* =====================================================
-   BOARD
+   BOARD — PC DEFAULT
 ===================================================== */
 .board {
   width: 360px;
@@ -78,9 +78,9 @@ html, body {
   grid-template-columns: repeat(10, 1fr);
   grid-auto-rows: 1fr;
   gap: 2px;
-  padding: 10px;
+  padding: 6px;
   border-radius: 14px;
-  border: 2px solid rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.1);
   position: relative;
   box-sizing: border-box;
 }
@@ -92,71 +92,52 @@ html, body {
 }
 
 /* =====================================================
-   SIDE PANEL (Hold + Next3)
+   SIDE PANEL (PC)
 ===================================================== */
 .side-stack {
-  width: 260px;
+  width: 240px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .hold-card,
 .next3-card,
 .controls-card {
   background: rgba(30,41,59,0.55);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 14px;
-  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
   backdrop-filter: blur(6px);
 }
 
 .panel-title {
   font-size: 14px;
-  margin-bottom: 10px;
-  opacity: 0.8;
+  margin-bottom: 8px;
+  opacity: 0.7;
 }
 
-.hold-grid {
-  width: 120px;
-  height: 120px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-}
-
-.next3-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
+.hold-grid,
 .next-mini {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-}
-
-.next-cell {
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
+  gap: 3px;
 }
 
 /* =====================================================
-   BUTTONS
+   BOTTOM BUTTONS (PC)
 ===================================================== */
 .bottom-buttons {
-  margin-top: 24px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 14px;
 }
 
 .bottom-buttons button {
-  padding: 12px 22px;
+  padding: 12px 24px;
   font-size: 16px;
   border: none;
   border-radius: 10px;
@@ -168,132 +149,139 @@ html, body {
 .bottom-buttons button:first-child {
   background: linear-gradient(90deg, #22c55e, #3b82f6);
 }
-
 .bottom-buttons button:nth-child(2) {
   background: linear-gradient(90deg, #f97316, #ef4444);
 }
 
 /* =====================================================
-   CONTROLS (PC)
-===================================================== */
-.controls-card ul {
-  padding-left: 20px;
-  font-size: 14px;
-}
-
-/* =====================================================
-   MOBILE BUTTONS (Default hidden)
+   MOBILE BUTTONS (HIDDEN ON PC)
 ===================================================== */
 .mobile-controls {
   display: none;
 }
 
 /* =====================================================
-   MOBILE MODE (VERTICAL)
-   Max-width → Tablet & Phone
+   ⚡️ MOBILE MODE (スマホUI：1画面に収める)
 ===================================================== */
-@media (max-width: 850px) {
-  
+@media (max-width: 430px) {
+
+  html, body {
+    height: 100%;
+    overflow: hidden; /* ← スクロール禁止 */
+  }
+
+  .tetris-root {
+    padding: env(safe-area-inset-top) 6px env(safe-area-inset-bottom);
+  }
+
+  /* ---------- TITLE ---------- */
+  .title {
+    font-size: 22px;
+    margin-top: 4px;
+  }
+
+  /* ---------- STATUS ---------- */
+  .top-status {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+  }
+  .stat-item {
+    font-size: 11px;
+  }
+  .stat-item span {
+    font-size: 9px;
+  }
+
+  /* ---------- MAIN PANEL (縦→圧縮) ---------- */
   .middle-panel {
     flex-direction: column;
     align-items: center;
-    gap: 22px;
+    gap: 4px;
   }
 
-  .side-stack {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  /* NEXT & HOLD 少し縮小 */
-  .next-mini,
-  .hold-grid {
-    width: 80px;
-    height: 80px;
-  }
-
-  /* Board responsive width */
+  /* ---------- BOARD（高さ調整） ---------- */
   .board {
     width: 92vw;
-    height: calc(92vw * 1.65);
-    max-height: 600px;
+    height: 44vh;  /* ← これで1画面収まる */
+    max-height: 420px;
+    padding: 4px;
+    gap: 2px;
     border-width: 1px;
-    padding: 6px;
   }
 
-  /* スマホ用ボタン */
+  /* ---------- HOLD / NEXT を横並び ---------- */
+  .side-stack {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .hold-card,
+  .next3-card {
+    width: 48%;
+    padding: 10px;
+  }
+
+  .hold-grid,
+  .next-mini {
+    width: 70px;
+    height: 70px;
+    gap: 2px;
+  }
+
+  /* ---------- 操作ボタン（1行でコンパクト） ---------- */
   .mobile-controls {
     display: flex;
+    justify-content: center;
+    gap: 10px;
     position: fixed;
-    bottom: env(safe-area-inset-bottom, 12px);
+    bottom: calc(env(safe-area-inset-bottom) + 6px);
     left: 50%;
     transform: translateX(-50%);
     background: rgba(30,41,59,0.7);
-    padding: 12px 14px;
-    gap: 10px;
-    border-radius: 18px;
+    padding: 10px 14px;
+    border-radius: 16px;
     z-index: 999;
   }
 
   .mobile-controls button {
-    font-size: 20px;
-    padding: 12px 16px;
+    font-size: 24px;
+    padding: 10px 14px;
     background: #1e293b;
-    color: #f8fafc;
     border: 1px solid #334155;
     border-radius: 12px;
+    color: #f8fafc;
+  }
+
+  /* ---------- PCボタン非表示 ---------- */
+  .bottom-buttons {
+    display: none;
+  }
+
+  /* ---------- Controls（スマホで隠す） ---------- */
+  .controls-card {
+    display: none;
   }
 }
 
 /* =====================================================
-   iPhone 14 / 15 / Pro / Pro Max 特化
-   (小型画面で縦伸び防止)
-===================================================== */
-@media (max-width: 430px) {
-
-  .top-status {
-    padding: 10px 12px;
-    gap: 6px;
-  }
-
-  .board {
-    width: 94vw;
-    height: 60vh;        /* ← 縦伸び防止の超重要ポイント */
-    max-height: 520px;
-  }
-
-  .mobile-controls {
-    bottom: calc(env(safe-area-inset-bottom, 10px) + 8px);
-    padding: 10px 12px;
-  }
-
-  /* HOLD / NEXT さらに小さく */
-  .next-mini,
-  .hold-grid {
-    width: 70px;
-    height: 70px;
-  }
-
-  .title {
-    font-size: 26px;
-  }
-}
-
-/* =====================================================
-   LANDSCAPE MODE (スマホ横向き)
+   📺 LANDSCAPE (スマホ横向き → PCレイアウト)
 ===================================================== */
 @media (max-height: 500px) and (orientation: landscape) {
 
+  body {
+    overflow: hidden;
+  }
+
   .middle-panel {
     flex-direction: row;
-    justify-content: center;
     gap: 20px;
   }
 
   .board {
     height: 90vh;
-    width: calc(90vh / 2);
+    width: calc(90vh * 0.5);
   }
 
   .side-stack {
