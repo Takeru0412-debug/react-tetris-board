@@ -1,105 +1,75 @@
-/* =============================
-   GAME SCREEN LAYOUT（A版）
-   ============================= */
+/* =========================================================
+   PC（デフォルト）
+========================================================= */
+
 .game-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
-/* =============================
-   STATUS BAR (上部インフォ)
-   ============================= */
+/* ステータスバー */
 .status-bar {
-  width: 100%;
-  background: rgba(30,41,59,0.85);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 12px 20px;
-
   display: flex;
   justify-content: space-between;
-  text-align: center;
+  background: #1e293b;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .status-item-title {
-  font-size: 11px;
-  opacity: 0.65;
+  font-size: 13px;
+  opacity: 0.7;
 }
 
 .status-item-value {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-/* =============================
-   CENTER PART
-   ============================= */
+/* 中央エリア */
 .middle-row {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 24px;
 }
 
-/* =============================
-   GAME BOARD
-   ============================= */
+/* ボード */
 .game-board {
   width: 360px;
-  height: 720px; /* 10×20 = 縦2倍 */
-  background: #0d1724;
+  height: 720px;
+  background: #0f172a;
   border-radius: 14px;
-  padding: 6px;
-
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-auto-rows: 1fr;
-  gap: 4px;
-
+  gap: 3px;
+  padding: 6px;
   position: relative;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
 /* デッドライン */
 .deadline {
   position: absolute;
-  top: 0;
+  top: calc(720px / 20 - 2px);
   left: 0;
   width: 100%;
-  height: 6px;
-  background: linear-gradient(90deg, #ef4444, #f87171);
-  box-shadow: 0 0 10px #f87171;
-  border-radius: 4px;
+  height: 2px;
+  background: rgba(255, 50, 50, 0.8);
+  z-index: 50;
 }
 
-/* =============================
-   CELLS
-   ============================= */
 .cell {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 6px;
-  transition: 0.05s;
+  border-radius: 5px;
 }
 
-.empty {
-  background: rgba(255,255,255,0.03);
-}
-
-.ghost {
-  border: 2px dashed rgba(255,255,255,0.25);
-  opacity: 0.5;
-}
-
-/* =============================
-   HOLD / NEXT SIDE PANEL
-   ============================= */
+/* サイド */
 .side-column {
-  width: 240px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -107,135 +77,155 @@
 
 .side-panel {
   background: #1e293b;
-  border-radius: 14px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 0 15px rgba(0,0,0,0.25);
+  padding: 12px;
+  border-radius: 12px;
 }
 
-.panel-title {
-  font-size: 16px;
-  margin-bottom: 8px;
-  opacity: 0.85;
-}
-
+/* HOLD */
 .hold-grid,
 .next-mini {
-  width: 100%;
-  height: 100px;
+  width: 96px;
+  height: 96px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+  gap: 2px;
 }
 
+/* Next 3 */
 .next-queue-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
-/* NEXT mini blocks */
-.next-mini {
-  height: 80px;
-  padding: 8px;
-  background: #0d1724;
-  border-radius: 10px;
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 4px;
-}
-
-/* =============================
-   BOTTOM BUTTONS
-   ============================= */
+/* ボタン行 */
 .bottom-btn-row {
-  width: 100%;
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  gap: 12px;
 }
 
-.bottom-btn-row button {
+.btn-green,
+.btn-orange,
+.btn-gray {
   flex: 1;
-  padding: 14px;
+  padding: 12px;
   font-size: 18px;
-  font-weight: 600;
-  border-radius: 12px;
-  border: none;
   color: white;
+  border-radius: 10px;
+  border: none;
 }
 
 .btn-green { background: #22c55e; }
-.btn-orange { background: #fb923c; }
-.btn-gray { background: #64748b; }
+.btn-orange { background: #f97316; }
+.btn-gray { background: #334155; }
 
-/* =============================
-   MOBILE MODE
-   ============================= */
+/* モバイル操作ボタン */
+.mobile-controls {
+  display: none; /* PCは非表示 */
+}
+
+
+
+
+/* =========================================================
+   📱 スマホ専用（超重要）
+========================================================= */
 @media (max-width: 480px) {
 
   .game-layout {
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .middle-row {
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .game-board {
-    width: 90vw;
-    height: calc(90vw * 2);
-    max-height: 60vh;
-    gap: 2px;
-  }
-
-  .side-column {
-    width: 100%;
-    flex-direction: row;
-  }
-
-  .side-panel {
-    flex: 1;
-    min-height: 140px;
-  }
-
-  .bottom-btn-row {
+    padding: 10px 10px 110px;
     gap: 10px;
   }
 
-}
+  /* ステータスバー小型化 */
+  .status-bar {
+    padding: 8px 10px;
+  }
 
-/* =============================
-   MOBILE CONTROLS
-   ============================= */
-.mobile-controls {
-  display: none;
-}
+  .status-item-value {
+    font-size: 16px;
+  }
 
-@media (max-width: 480px) {
+  /* 中央エリアは縦並び */
+  .middle-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ボードは比率維持 + 小さめ */
+  .game-board {
+    width: 88vw;
+    height: calc(88vw * 2.0); /* 10×20 比率維持 */
+    max-height: 55vh;
+    padding: 4px;
+    gap: 2px;
+  }
+
+  /* デッドラインの位置自動計算 */
+  .deadline {
+    top: calc((88vw * 2.0) / 20 - 2px);
+  }
+
+  /* HOLD / NEXT を横並びにして小型化 */
+  .side-column {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .side-panel {
+    width: 46%;
+    padding: 8px;
+  }
+
+  .hold-grid,
+  .next-mini {
+    width: 64px;
+    height: 64px;
+    gap: 1px;
+  }
+
+  .next-queue-list {
+    gap: 6px;
+  }
+
+  /* 下ボタンは常に見える */
+  .bottom-btn-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-green,
+  .btn-orange,
+  .btn-gray {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* モバイル操作ボタン（常にページ下固定） */
   .mobile-controls {
     display: flex;
     position: fixed;
-    bottom: 80px;
+    bottom: calc(env(safe-area-inset-bottom) + 10px);
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(30,41,59,0.9);
-    padding: 12px 18px;
-    border-radius: 16px;
-    gap: 12px;
+    background: rgba(30,41,59,0.8);
+    padding: 10px 18px;
+    border-radius: 14px;
+    gap: 10px;
     backdrop-filter: blur(6px);
+    z-index: 999;
   }
 
   .mobile-controls button {
-    width: 54px;
-    height: 54px;
-    font-size: 22px;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
     background: #1e293b;
     border: 2px solid #334155;
-    border-radius: 12px;
+    border-radius: 10px;
     color: white;
   }
 }
