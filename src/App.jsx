@@ -461,19 +461,6 @@ export default function App() {
         </button>
       </div>
 
-      {/* Controls */}
-      <div className="controls-card">
-        <div className="panel-title">Controls</div>
-        <ul>
-          <li>Enter : Start / Restart</li>
-          <li>← → : Move</li>
-          <li>↑ : Rotate</li>
-          <li>↓ : Soft drop</li>
-          <li>Space : Hard drop</li>
-          <li>C : Hold</li>
-          <li>P : Pause</li>
-        </ul>
-      </div>
 
       {/* モバイル操作ボタン（CSSでスマホ時だけ表示） */}
       <div className="mobile-controls">
