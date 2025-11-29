@@ -45,45 +45,34 @@ html, body {
 .top-status {
   width: 100%;
   background: rgba(30,41,59,0.85);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 12px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 14px 10px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .stat-item {
   flex: 1;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 }
 
 .stat-item span {
   font-size: 12px;
-  opacity: 0.7;
-}
-
-.stat-item-value {
-  font-size: 20px;
-  font-weight: 600;
+  opacity: 0.65;
 }
 
 /* -------------------------------------------------------
-   MIDDLE AREA (BOARD + SIDE)
+   MAIN LAYOUT
 ------------------------------------------------------- */
 .middle-panel {
   display: flex;
-  width: 100%;
   justify-content: center;
   gap: 30px;
 }
 
 /* -------------------------------------------------------
    GAME BOARD
-   ※ 10×20 = 縦2倍比率を絶対維持
 ------------------------------------------------------- */
 .board {
   position: relative;
@@ -99,47 +88,35 @@ html, body {
 }
 
 .cell {
-  width: 100%;
-  aspect-ratio: 1 / 1;
   border-radius: 4px;
+  width: 100%;
+  aspect-ratio: 1/1;
 }
 
-/* GAME OVER OVERLAY */
+/* GAME OVER */
 .overlay {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(4px);
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0,0,0,0.6);
   border-radius: 14px;
-}
-
-.overlay-content {
-  text-align: center;
   font-size: 32px;
   font-weight: 700;
-  color: white;
-}
-
-.small-text {
-  font-size: 16px;
-  opacity: 0.75;
-  margin-top: 8px;
 }
 
 /* -------------------------------------------------------
-   SIDE PANELS (HOLD / NEXT ×3)
+   SIDE PANELS
 ------------------------------------------------------- */
 .side-stack {
-  width: 240px;
+  width: 220px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
+/* HOLD BOX */
 .hold-card,
 .next3-card {
   background: #1e293b;
@@ -148,39 +125,52 @@ html, body {
 }
 
 .panel-title {
+  margin-bottom: 8px;
   font-size: 16px;
-  margin-bottom: 6px;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-.hold-grid,
+/* HOLD グリッド */
+.hold-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  aspect-ratio: 1/1;   /* ← 正方形になる！ */
+}
+
+/* NEXT ×3 LIST */
+.next3-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .next-mini {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-}
+  gap: 3px;
 
-.next3-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  /* ← NEXT ピースが巨大にならないための縮小 */
+  transform: scale(0.6);
+  transform-origin: top left;
+
+  height: 80px; /* ← これで高さ安定 */
 }
 
 .next-cell {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 22px;
+  height: 22px;
   border-radius: 4px;
 }
 
 /* -------------------------------------------------------
-   START / PAUSE BUTTONS
+   BOTTOM BUTTONS
 ------------------------------------------------------- */
 .bottom-buttons {
   display: flex;
   gap: 20px;
-  width: 100%;
-  justify-content: center;
 }
 
 .bottom-buttons button {
@@ -188,10 +178,10 @@ html, body {
   padding: 14px;
   border-radius: 12px;
   border: none;
-  color: #fff;
-  background: #22c55e;
   font-size: 20px;
   font-weight: 700;
+  color: white;
+  background: #22c55e;
 }
 
 .bottom-buttons button:nth-child(2) {
@@ -206,75 +196,67 @@ html, body {
 }
 
 /* -------------------------------------------------------
-   SMARTPHONE LAYOUT
+   SMARTPHONE
 ------------------------------------------------------- */
 @media (max-width: 480px) {
 
   .tetris-root {
-    padding: 14px;
-    gap: 16px;
+    padding: 12px;
+    gap: 14px;
   }
 
   .title {
     font-size: 28px;
   }
 
-  .top-status {
-    padding: 10px;
-  }
-
-  .stat-item span {
-    font-size: 11px;
-  }
-
-  .stat-item-value {
-    font-size: 17px;
-  }
-
-  /* board の比率は絶対固定！ */
-  .board {
-    width: 92vw;
-    height: calc(92vw * 2.0); /* 10×20 比率固定 */
-    max-height: 58vh;         /* ボタンが必ず見えるように制限 */
-    gap: 2px;
-    padding: 4px;
-  }
-
   .middle-panel {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+  }
+
+  .board {
+    width: 92vw;
+    height: calc(92vw * 2);
+    max-height: 60vh;
+    padding: 4px;
+    gap: 2px;
   }
 
   .side-stack {
     width: 100%;
-    display: flex;
     flex-direction: row;
     gap: 10px;
   }
 
-  .hold-card, .next3-card {
+  .hold-card,
+  .next3-card {
     width: 50%;
-    min-height: 120px;
+    min-height: 130px;
+  }
+
+  .hold-grid {
+    aspect-ratio: 1/1;
+  }
+
+  .next-mini {
+    transform: scale(0.55);
+    height: 70px;
   }
 
   .bottom-buttons button {
-    padding: 12px;
     font-size: 18px;
+    padding: 12px;
   }
 
-  /* モバイルコントローラー表示 */
   .mobile-controls {
     display: flex;
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 14px);
+    bottom: calc(env(safe-area-inset-bottom) + 18px);
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(30,41,59,0.8);
     padding: 12px 16px;
-    border-radius: 18px;
-    backdrop-filter: blur(6px);
-    z-index: 999;
+    background: rgba(30,41,59,0.85);
+    border-radius: 16px;
     gap: 12px;
   }
 
@@ -289,11 +271,8 @@ html, body {
   }
 }
 
-/* -------------------------------------------------------
-   SMALL HEIGHT (iPhone mini・Safari UI 表示対策)
-------------------------------------------------------- */
 @media (max-height: 700px) {
   .board {
-    max-height: 44vh;
+    max-height: 50vh;
   }
 }
