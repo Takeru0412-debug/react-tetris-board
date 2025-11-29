@@ -1,41 +1,21 @@
 import React, { useState } from "react";
 import "./styles/App.css";
-import "./styles/game.css";
+import TitleScreen from "./screens/TitleScreen";
+import GameScreen from "./screens/GameScreen";
 
-import GameScreen from "./screens/GameScreen.jsx";
-import TitleScreen from "./screens/TitleScreen.jsx";
-
-export default function App() {
-  const [screen, setScreen] = useState("title");
-  const [highScore, setHighScore] = useState(() => {
-    const v = Number(window.localStorage.getItem("tetrisHighScore"));
-    return Number.isFinite(v) ? v : 0;
-  });
-
-  const handleUpdateHighScore = (score) => {
-    setHighScore((prev) => {
-      const next = score > prev ? score : prev;
-      if (next !== prev) {
-        window.localStorage.setItem("tetrisHighScore", String(next));
-      }
-      return next;
-    });
-  };
+const App = () => {
+  const [scene, setScene] = useState("title");
 
   return (
     <div className="app-root">
-      {screen === "title" ? (
-        <TitleScreen
-          onStart={() => setScreen("game")}
-          highScore={highScore}
-        />
-      ) : (
-        <GameScreen
-          onBackToTitle={() => setScreen("title")}
-          highScore={highScore}
-          onUpdateHighScore={handleUpdateHighScore}
-        />
-      )}
+      <div className="app-inner">
+        {scene === "title" && <TitleScreen onStart={() => setScene("game")} />}
+        {scene === "game" && (
+          <GameScreen onBackToTitle={() => setScene("title")} />
+        )}
+      </div>
     </div>
   );
-}
+};
+
+export default App;

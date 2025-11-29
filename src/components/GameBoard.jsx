@@ -1,70 +1,65 @@
 import React from "react";
+import { BOARD_WIDTH, BOARD_HEIGHT, getRotatedShape } from "../utils/tetrisCore";
+import "../styles/game.css";
 
-export default function GameBoard({
-  displayBoard,
-  ghostCells,
-  colors,
-  showDeadline = true,
-  gameOver,
-}) {
+const GameBoard = ({ board, currentPiece, ghostY }) => {
+  const renderCell = (cell, x, y) => {
+    let type = cell?.type || null;
+    let color = cell?.color || null;
+    let isCurrent = false;
+    let isGhost = false;
+
+    if (currentPiece) {
+      const shape = getRotatedShape(currentPiece, 0);
+      for (let sy = 0; sy < shape.length; sy++) {
+        for (let sx = 0; sx < shape[sy].length; sx++) {
+          if (!shape[sy][sx]) continue;
+          const px = currentPiece.x + sx;
+          const py = currentPiece.y + sy;
+          if (px === x && py === y) {
+            type = currentPiece.type;
+            color = currentPiece.color;
+            isCurrent = true;
+          }
+        }
+      }
+
+      const ghostShape = getRotatedShape(currentPiece, 0);
+      for (let sy = 0; sy < ghostShape.length; sy++) {
+        for (let sx = 0; sx < ghostShape[sy].length; sx++) {
+          if (!ghostShape[sy][sx]) continue;
+          const px = currentPiece.x + sx;
+          const py = ghostY + sy;
+          if (px === x && py === y && !isCurrent && !cell) {
+            type = currentPiece.type;
+            color = currentPiece.color;
+            isGhost = true;
+          }
+        }
+      }
+    }
+
+    const classNames = ["cell"];
+    if (type) classNames.push("cell-filled");
+    if (isCurrent) classNames.push("cell-current");
+    if (isGhost) classNames.push("cell-ghost");
+
+    const style = color ? { "--cell-color": color } : {};
+
+    return <div key={`${x}-${y}`} className={classNames.join(" ")} style={style} />;
+  };
+
   return (
-    <div className="game-board">
-      {showDeadline && <div className="deadline" />}
-
-      {displayBoard.map((row, y) =>
-        row.map((value, x) => {
-          const key = `${x}-${y}`;
-          const isGhost = ghostCells.has(key) && value === 0;
-
-          const style = {
-            backgroundColor: isGhost ? "transparent" : colors[value],
-            boxShadow:
-              value !== 0
-                ? "0 0 6px rgba(148, 163, 253, 0.55)"
-                : "none",
-            border: isGhost ? "2px dashed rgba(148, 163, 253, 0.8)" : "none",
-          };
-
-          const className =
-            value === 0 && !isGhost ? "cell empty" : "cell";
-
-          return (
-            <div
-              key={key}
-              className={className + (isGhost ? " ghost" : "")}
-              style={style}
-            />
-          );
-        })
-      )}
-
-      {gameOver && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(15,23,42,0.8)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            borderRadius: 14,
-          }}
-        >
-          <div
-            style={{
-              fontSize: 32,
-              fontWeight: 700,
-              marginBottom: 8,
-            }}
-          >
-            GAME OVER
-          </div>
-          <div style={{ fontSize: 14, opacity: 0.8 }}>
-            Press Enter / Tap Restart
-          </div>
+    <div className="board">
+      {Array.from({ length: BOARD_HEIGHT }).map((_, y) => (
+        <div key={y} className="board-row">
+          {Array.from({ length: BOARD_WIDTH }).map((_, x) =>
+            renderCell(board[y][x], x, y)
+          )}
         </div>
-      )}
+      ))}
     </div>
   );
-}
+};
+
+export default GameBoard;

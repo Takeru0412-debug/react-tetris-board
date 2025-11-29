@@ -1,28 +1,38 @@
 import React from "react";
+import { getRotatedShape } from "../utils/tetrisCore";
 
-export default function NextQueue({ queue, tetrominoes, colors }) {
-  const shapes = queue.map((t) => tetrominoes[t]);
+const MiniBoard = ({ piece }) => {
+  if (!piece) return <div className="mini-board empty" />;
 
+  const shape = getRotatedShape(piece, 0);
   return (
-    <div className="side-panel">
-      <div className="panel-title">NEXT × 3</div>
-      <div className="next-queue-list">
-        {shapes.map((shape, idx) => (
-          <div key={idx} className="next-mini">
-            {shape.map((row, y) =>
-              row.map((v, x) => (
-                <div
-                  key={`${idx}-${x}-${y}`}
-                  className="cell"
-                  style={{
-                    backgroundColor: v ? colors[v] : "transparent",
-                  }}
-                />
-              ))
-            )}
-          </div>
+    <div className="mini-board">
+      {shape.map((row, y) => (
+        <div key={y} className="mini-row">
+          {row.map((v, x) => (
+            <div
+              key={x}
+              className={`mini-cell ${v ? "mini-cell-filled" : ""}`}
+              style={v ? { "--cell-color": piece.color } : {}}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const NextQueue = ({ nextPieces }) => {
+  return (
+    <div className="panel">
+      <h3 className="panel-title">NEXT</h3>
+      <div className="next-list">
+        {nextPieces.map((p, i) => (
+          <MiniBoard key={i} piece={p} />
         ))}
       </div>
     </div>
   );
-}
+};
+
+export default NextQueue;

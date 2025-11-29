@@ -1,90 +1,328 @@
-/* ============================================================
-   共通レイアウト
-============================================================ */
-.game-layout {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 10px;
+.game-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  background: radial-gradient(circle at top, #1a237e 0, #000 55%);
+}
+
+/* 上部ボタン行 */
+.game-top-bar {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.top-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(12, 22, 40, 0.85);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.1s ease, transform 0.1s ease,
+    box-shadow 0.1s ease, filter 0.1s ease;
+}
+
+.top-btn:hover:not(:disabled) {
+  background: rgba(42, 72, 120, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+}
+
+.top-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ゲームレイアウト */
+
+.game-layout {
+  display: flex;
   gap: 16px;
-}
-
-/* ===== PC 用メイン配置（横並び） ===== */
-.game-main {
-  display: flex;
-  flex-direction: row;
+  align-items: flex-start;
   justify-content: center;
-  gap: 24px;
+  width: 100%;
+  max-width: 960px;
 }
 
-/* PC のみ表示 */
-.pc-only { display: flex; flex-direction: column; gap: 20px; }
+/* パネル */
 
-/* スマホ用の HOLD/NEXT 横並び */
-.mobile-only { display: none; }
+.panel {
+  background: rgba(13, 25, 47, 0.95);
+  border-radius: 20px;
+  padding: 14px 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  min-width: 160px;
+}
 
-/* ============================================================
-   ボトムボタン
-============================================================ */
-.bottom-buttons {
+.side-column {
   display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-.bottom-buttons button {
-  flex: 1;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 14px 0;
-  border-radius: 12px;
-  border: none;
-  color: white;
+.panel-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
-.restart-btn { background: #22c55e; }
-.pause-btn { background: #f97316; }
-.title-btn { background: #64748b; }
+.hold-lock {
+  font-size: 0.9rem;
+  color: #ef5350;
+  margin-left: 4px;
+}
 
-/* ============================================================
-   スマホレイアウト
-============================================================ */
-@media (max-width: 480px) {
+/* ステータス */
 
-  /* 全体を中央寄せ */
+.status-panel {
+  font-size: 0.9rem;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+
+.status-item span:last-child {
+  color: #fff;
+  font-weight: 600;
+}
+
+.status-badge {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.status-badge.gameover {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.9);
+  color: #ff8a80;
+}
+
+.status-badge.paused {
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.9);
+  color: #ffe082;
+}
+
+.status-help {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ボード */
+
+.board {
+  position: relative;
+  background: radial-gradient(circle at top, #151c30 0, #020409 60%);
+  border-radius: 24px;
+  padding: 12px;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(41, 182, 246, 0.1), transparent);
+  pointer-events: none;
+}
+
+.board-row {
+  display: flex;
+}
+
+.cell {
+  width: min(2.6vw, 26px);
+  height: min(2.6vw, 26px);
+  max-width: 26px;
+  max-height: 26px;
+  margin: 1px;
+  border-radius: 7px;
+  background: rgba(8, 12, 24, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.cell-filled {
+  background: radial-gradient(circle at 25% 15%, #fff 0, var(--cell-color) 35%);
+  box-shadow:
+    0 0 14px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(0, 255, 255, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.cell-current {
+  box-shadow:
+    0 0 16px rgba(255, 255, 255, 0.55),
+    0 0 24px rgba(0, 255, 255, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.cell-ghost {
+  background: radial-gradient(circle at 25% 15%, transparent 0, transparent 35%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 0 10px rgba(178, 235, 242, 0.35);
+  opacity: 0.5;
+}
+
+/* ミニボード (NEXT / HOLD) */
+
+.mini-board {
+  background: radial-gradient(circle at top, #131a2b 0, #020409 70%);
+  border-radius: 16px;
+  padding: 8px;
+  margin-top: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.mini-board.empty {
+  opacity: 0.35;
+}
+
+.mini-row {
+  display: flex;
+}
+
+.mini-cell {
+  width: 14px;
+  height: 14px;
+  margin: 1px;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.mini-cell-filled {
+  background: radial-gradient(circle at 25% 15%, #fff 0, var(--cell-color) 35%);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+/* NEXT リスト */
+
+.next-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* モバイル操作 */
+
+.mobile-controls {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 480px;
+  display: none; /* デフォルト PC 非表示 */
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobile-row {
+  display: flex;
+  gap: 6px;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(17, 30, 60, 0.95);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.8);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+}
+
+.control-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+  filter: brightness(0.9);
+}
+
+/* レスポンシブ */
+
+@media (max-width: 900px) {
   .game-layout {
-    padding-bottom: 150px;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 10px;
   }
 
-  /* ボードを縮小（比率は保持） */
-  .game-main {
+  .side-column {
+    min-width: 120px;
+  }
+
+  .panel {
+    border-radius: 18px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .game-layout {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
   }
 
-  .pc-only { display: none; }
-  .mobile-only {
-    display: flex;
+  .side-column {
+    flex-direction: row;
     width: 100%;
+    max-width: 480px;
     justify-content: space-between;
-    gap: 10px;
   }
 
-  .mobile-only > * {
+  .panel {
     flex: 1;
   }
 
-  /* ボトムボタンはスマホで少し小さめ */
-  .bottom-buttons button {
-    font-size: 16px;
-    padding: 10px;
+  .board {
+    margin-top: 6px;
   }
 
-  /* モバイル操作パッド位置調整 */
+  .cell {
+    width: 24px;
+    height: 24px;
+  }
+
   .mobile-controls {
-    bottom: 12px !important;
+    display: flex; /* スマホでは表示 */
+  }
+}
+
+@media (max-width: 480px) {
+  .top-btn {
+    font-size: 0.8rem;
+    padding: 6px 6px;
+  }
+
+  .panel {
+    padding: 8px 10px;
+  }
+
+  .cell {
+    width: 22px;
+    height: 22px;
   }
 }

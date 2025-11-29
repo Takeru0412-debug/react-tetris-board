@@ -1,19 +1,32 @@
 import React from "react";
 
-export default function MobileControls({
-  onLeft,
-  onRight,
-  onRotate,
-  onSoftDrop,
-  onHardDrop,
-}) {
+const MobileControls = ({ onLeft, onRight, onRotate, onSoftDrop, onHardDrop, onHold }) => {
   return (
     <div className="mobile-controls">
-      <button onClick={onLeft}>←</button>
-      <button onClick={onRight}>→</button>
-      <button onClick={onRotate}>⟳</button>
-      <button onClick={onSoftDrop}>↓</button>
-      <button onClick={onHardDrop}>⬇</button>
+      <div className="mobile-row">
+        <button className="control-btn" onClick={onHold}>
+          HOLD
+        </button>
+        <button className="control-btn" onClick={onRotate}>
+          ⟳
+        </button>
+        <button className="control-btn" onClick={onHardDrop}>
+          ▼▼
+        </button>
+      </div>
+      <div className="mobile-row">
+        <button className="control-btn" onClick={onLeft}>
+          ←
+        </button>
+        <button className="control-btn" onClick={onSoftDrop}>
+          ▼
+        </button>
+        <button className="control-btn" onClick={onRight}>
+          →
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default MobileControls;

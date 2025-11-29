@@ -1,42 +1,35 @@
 import React from "react";
 
-export default function StatusBar({
-  score,
-  lines,
-  level,
-  combo,
-  b2b,
-  highScore,
-}) {
-  const comboText = combo < 0 ? "-" : combo;
-  const b2bText = b2b ? "Yes" : "-";
-
+const StatusBar = ({ score, level, lines, isPaused, isGameOver }) => {
   return (
-    <div className="status-bar">
-      <div>
-        <div className="status-item-title">Score</div>
-        <div className="status-item-value">{score}</div>
+    <div className="panel status-panel">
+      <h3 className="panel-title">STATUS</h3>
+      <div className="status-item">
+        <span>Score</span>
+        <span>{score}</span>
       </div>
-      <div>
-        <div className="status-item-title">Lines</div>
-        <div className="status-item-value">{lines}</div>
+      <div className="status-item">
+        <span>Level</span>
+        <span>{level}</span>
       </div>
-      <div>
-        <div className="status-item-title">Level</div>
-        <div className="status-item-value">{level}</div>
+      <div className="status-item">
+        <span>Lines</span>
+        <span>{lines}</span>
       </div>
-      <div>
-        <div className="status-item-title">Combo</div>
-        <div className="status-item-value">{comboText}</div>
-      </div>
-      <div>
-        <div className="status-item-title">B2B</div>
-        <div className="status-item-value">{b2bText}</div>
-      </div>
-      <div>
-        <div className="status-item-title">High</div>
-        <div className="status-item-value">{highScore}</div>
+      {isGameOver && <div className="status-badge gameover">GAME OVER</div>}
+      {isPaused && !isGameOver && (
+        <div className="status-badge paused">PAUSED</div>
+      )}
+      <div className="status-help">
+        <p>← → : 移動</p>
+        <p>↑ or X : 回転</p>
+        <p>↓ : ソフトドロップ</p>
+        <p>Space : ハードドロップ</p>
+        <p>C : HOLD / 入れ替え</p>
+        <p>P : 一時停止</p>
       </div>
     </div>
   );
-}
+};
+
+export default StatusBar;

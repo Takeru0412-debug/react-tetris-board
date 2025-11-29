@@ -1,38 +1,37 @@
 import React from "react";
+import { getRotatedShape } from "../utils/tetrisCore";
 
-export default function HoldBox({ holdType, tetrominoes, colors }) {
-  const cells = [];
-
-  if (holdType) {
-    const shape = tetrominoes[holdType];
-    shape.forEach((row, y) =>
-      row.forEach((v, x) => {
-        cells.push({ x, y, value: v ? holdType : 0 });
-      })
-    );
-  } else {
-    for (let i = 0; i < 16; i++) {
-      cells.push({ x: i % 4, y: Math.floor(i / 4), value: 0 });
+const HoldBox = ({ holdPiece, canHold }) => {
+  const renderPiece = () => {
+    if (!holdPiece) {
+      return <div className="mini-board empty" />;
     }
-  }
-
-  return (
-    <div className="side-panel">
-      <div className="panel-title">HOLD</div>
-      <div className="hold-grid">
-        {cells.map((cell, idx) => (
-          <div
-            key={idx}
-            className="cell"
-            style={{
-              backgroundColor: cell.value ? colors[cell.value] : "transparent",
-            }}
-          />
+    const shape = getRotatedShape(holdPiece, 0);
+    return (
+      <div className="mini-board">
+        {shape.map((row, y) => (
+          <div key={y} className="mini-row">
+            {row.map((v, x) => (
+              <div
+                key={x}
+                className={`mini-cell ${v ? "mini-cell-filled" : ""}`}
+                style={v ? { "--cell-color": holdPiece.color } : {}}
+              />
+            ))}
+          </div>
         ))}
       </div>
-      <div style={{ fontSize: 11, marginTop: 6, opacity: 0.65 }}>
-        Key: C / Button: Hold
-      </div>
+    );
+  };
+
+  return (
+    <div className="panel">
+      <h3 className="panel-title">
+        HOLD {canHold ? "" : <span className="hold-lock">×</span>}
+      </h3>
+      {renderPiece()}
     </div>
   );
-}
+};
+
+export default HoldBox;
