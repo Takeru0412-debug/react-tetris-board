@@ -1,39 +1,47 @@
-/* GLOBAL */
-body {
+/* =====================================================
+   GLOBAL
+===================================================== */
+html, body {
   margin: 0;
   padding: 0;
   background: #0f172a;
   color: #e2e8f0;
   font-family: "Segoe UI", sans-serif;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior-y: none;
 }
 
 .tetris-root {
   width: 100%;
-  max-width: 1100px;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
   box-sizing: border-box;
 }
 
-/* Title */
+/* =====================================================
+   TITLE
+===================================================== */
 .title {
   text-align: center;
-  font-size: 28px;
-  color: #f8fafc;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin-top: 10px;
+  margin-bottom: 18px;
   letter-spacing: 3px;
+  font-weight: 600;
 }
 
-/* ① 上部ステータスバー（横長） */
+/* =====================================================
+   TOP STATUS BAR
+===================================================== */
 .top-status {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 20px;
+  padding: 14px 20px;
   background: rgba(30,41,59,0.6);
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.1);
   margin-bottom: 20px;
 }
@@ -41,24 +49,27 @@ body {
 .stat-item {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
   text-align: center;
+  font-size: 15px;
 }
-
 .stat-item span {
-  opacity: 0.6;
   font-size: 12px;
+  opacity: 0.7;
 }
 
-/* ② Middle Panel (2 columns) */
+/* =====================================================
+   MAIN LAYOUT (PC default)
+===================================================== */
 .middle-panel {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 30px;
+  gap: 32px;
 }
 
-/* Board */
+/* =====================================================
+   BOARD
+===================================================== */
 .board {
   width: 360px;
   height: 720px;
@@ -68,19 +79,21 @@ body {
   grid-auto-rows: 1fr;
   gap: 2px;
   padding: 10px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 2px solid rgba(255,255,255,0.08);
   position: relative;
+  box-sizing: border-box;
 }
 
-/* Cells */
 .cell {
   width: 100%;
   height: 100%;
   border-radius: 4px;
 }
 
-/* Side stack */
+/* =====================================================
+   SIDE PANEL (Hold + Next3)
+===================================================== */
 .side-stack {
   width: 260px;
   display: flex;
@@ -88,15 +101,14 @@ body {
   gap: 20px;
 }
 
-/* Panel cards */
 .hold-card,
 .next3-card,
 .controls-card {
   background: rgba(30,41,59,0.55);
   border: 1px solid rgba(255,255,255,0.1);
   padding: 14px;
-  border-radius: 12px;
-  backdrop-filter: blur(5px);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
 }
 
 .panel-title {
@@ -105,28 +117,26 @@ body {
   opacity: 0.8;
 }
 
-/* HOLD grid */
 .hold-grid {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
+  gap: 4px;
 }
 
-/* NEXT × 3 */
 .next3-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .next-mini {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
+  gap: 4px;
 }
 
 .next-cell {
@@ -135,23 +145,24 @@ body {
   border-radius: 4px;
 }
 
-/* Buttons */
+/* =====================================================
+   BUTTONS
+===================================================== */
 .bottom-buttons {
-  margin-top: 25px;
+  margin-top: 24px;
   display: flex;
-  gap: 10px;
   justify-content: center;
+  gap: 14px;
 }
 
 .bottom-buttons button {
-  flex: 1;
-  max-width: 160px;
-  padding: 12px 0;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
+  padding: 12px 22px;
   font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
   color: #fff;
+  font-weight: 600;
 }
 
 .bottom-buttons button:first-child {
@@ -162,69 +173,135 @@ body {
   background: linear-gradient(90deg, #f97316, #ef4444);
 }
 
-/* Controls */
+/* =====================================================
+   CONTROLS (PC)
+===================================================== */
 .controls-card ul {
   padding-left: 20px;
   font-size: 14px;
 }
 
-/* MOBILE CONTROLS (PCでは非表示) */
+/* =====================================================
+   MOBILE BUTTONS (Default hidden)
+===================================================== */
 .mobile-controls {
   display: none;
 }
 
-/* ======================================================
-   📱 SMARTPHONE LAYOUT
-====================================================== */
+/* =====================================================
+   MOBILE MODE (VERTICAL)
+   Max-width → Tablet & Phone
+===================================================== */
 @media (max-width: 850px) {
-
-  .top-status {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
+  
   .middle-panel {
     flex-direction: column;
     align-items: center;
-  }
-
-  /* Board becomes 90vw */
-  .board {
-    width: 90vw;
-    height: calc(90vw * 2);
+    gap: 22px;
   }
 
   .side-stack {
     width: 100%;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  .hold-grid, .next-mini {
+  /* NEXT & HOLD 少し縮小 */
+  .next-mini,
+  .hold-grid {
     width: 80px;
     height: 80px;
   }
 
-  /* Mobile controls */
+  /* Board responsive width */
+  .board {
+    width: 92vw;
+    height: calc(92vw * 1.65);
+    max-height: 600px;
+    border-width: 1px;
+    padding: 6px;
+  }
+
+  /* スマホ用ボタン */
   .mobile-controls {
     display: flex;
     position: fixed;
-    bottom: 15px;
+    bottom: env(safe-area-inset-bottom, 12px);
     left: 50%;
     transform: translateX(-50%);
-    gap: 8px;
     background: rgba(30,41,59,0.7);
-    padding: 10px;
-    border-radius: 12px;
-    z-index: 900;
+    padding: 12px 14px;
+    gap: 10px;
+    border-radius: 18px;
+    z-index: 999;
   }
 
   .mobile-controls button {
-    padding: 12px 16px;
     font-size: 20px;
-    border-radius: 10px;
+    padding: 12px 16px;
     background: #1e293b;
     color: #f8fafc;
     border: 1px solid #334155;
+    border-radius: 12px;
+  }
+}
+
+/* =====================================================
+   iPhone 14 / 15 / Pro / Pro Max 特化
+   (小型画面で縦伸び防止)
+===================================================== */
+@media (max-width: 430px) {
+
+  .top-status {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .board {
+    width: 94vw;
+    height: 60vh;        /* ← 縦伸び防止の超重要ポイント */
+    max-height: 520px;
+  }
+
+  .mobile-controls {
+    bottom: calc(env(safe-area-inset-bottom, 10px) + 8px);
+    padding: 10px 12px;
+  }
+
+  /* HOLD / NEXT さらに小さく */
+  .next-mini,
+  .hold-grid {
+    width: 70px;
+    height: 70px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+}
+
+/* =====================================================
+   LANDSCAPE MODE (スマホ横向き)
+===================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  .middle-panel {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .board {
+    height: 90vh;
+    width: calc(90vh / 2);
+  }
+
+  .side-stack {
+    flex-direction: column;
+    width: auto;
+  }
+
+  .mobile-controls {
+    display: none;
   }
 }
